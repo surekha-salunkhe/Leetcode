@@ -1,0 +1,68 @@
+Given the head of a singly linked list, return the middle node of the linked list.
+If there are two middle nodes, return the second middle node.
+Example 1:
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+
+Example 2:
+Input: head = [1,2,3,4,5,6]
+Output: [4,5,6]
+Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+Constraints:
+The number of nodes in the list is in the range [1, 100].
+1 <= Node.val <= 100
+-----------------------------------------------------------------------------------------------------------------------------
+
+My Approach 1:
+1. Get two pointers same as head : fast and slow
+2. Check until fast and fast.next are not empty
+3. Increment fast pointer by 2 places (fast = fast.next.next)
+4. Increment slow by one pointer (slow = slow.next)
+5. Return slow once the fast pointer reached none
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        fast = slow = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
+        
+Complexity: O(N) as we travese through the linked list using while loop only once
+-----------------------------------------------------------------------------------------------------------------------------
+
+My Approach 2:
+1. To solve this problem, we need to travese through whole linked list
+2. Increment the counter to count the no. of nodes
+3. While increment also assign next to a temp mid pointer
+4. Assign all values of head to med
+5. Now check within the counter middle value counter // 2
+6. And print all mid.next nodes
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        mid = head
+        counter = 0
+        while mid is not None:
+            counter += 1
+            mid = mid.next
+        mid = head
+        for i in range(counter // 2):
+            mid = mid.next
+        return mid
+
+Complexity: O(N) as we travese through the linked list only once
