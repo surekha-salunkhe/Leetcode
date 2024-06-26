@@ -16,20 +16,6 @@ Complexity Analysis: Time and space complexity analysis provided for each soluti
 Best Practices: Code adheres to best practices and coding standards.
 Continuous Updates: Regular updates with new problems and solutions.
 
-📂 Repository Structure
-├── Easy
-│   ├── problem1
-│   ├── problem2
-│   └── ...
-├── Medium
-│   ├── problem1
-│   ├── problem2
-│   └── ...
-├── Hard
-│   ├── problem1
-│   ├── problem2
-│   └── ...
-└── README.md
 🧑‍💻 Author
 Created and maintained by Surekha Maruti Salunkhe.
 
