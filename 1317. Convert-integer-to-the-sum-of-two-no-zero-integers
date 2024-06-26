@@ -36,3 +36,9 @@ class Solution:
         return [a, b]
 input = 5
 output = [1, 4]
+
+Complexity:
+for loop run from 1 to n - 1          -> O(n)
+str conversion                        -> O(log(n))
+------------------------------------------------
+Overall: O(n) * O(log(n))             -> O(nlog(n))
