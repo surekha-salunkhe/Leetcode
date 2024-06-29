@@ -1,0 +1,60 @@
+Example 1:
+
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take. 
+To take course 1 you should have finished course 0. So it is possible.
+Example 2:
+
+Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+Output: false
+Explanation: There are a total of 2 courses to take. 
+To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+
+Constraints:
+1 <= numCourses <= 2000
+0 <= prerequisites.length <= 5000
+prerequisites[i].length == 2
+0 <= ai, bi < numCourses
+All the pairs prerequisites[i] are unique.
+-----------------------------------------------------------------------------------------------------------------------------
+My Approach and solution:
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # initialize the preMap with empty array,
+        # where preMap is the prerequisites a course has to complete
+        preMap = {i: [] for i in range(numCourses)}
+
+        # Fill the premap with prerequisites of each courses
+        for crs, pre in prerequisites:
+            preMap[crs].append(pre)
+        # create an empty visit set to fill visited courses
+        visitSet = set()
+
+        # create a Recursive dfs function to map through the courses
+        def dfs(crs):
+            # Think of base cases: if a course is visited again means its a cycle and will run infinite
+            if crs in visitSet:
+                return False
+            # 2nd base case: if the prerequisites is empty, means the prerequisite is completed
+            if preMap[crs] == []:
+                return True
+            # Add the courses to visitSet
+            visitSet.add(crs)
+            # Now, we have to check this for each prerequisites
+            for pre in preMap[crs]:
+                if not dfs(pre):
+                    return False
+            # remove the visited courses
+            visitSet.remove(crs)
+            # Remove the prerequisites once visited
+            preMap[crs] = []
+            return True
+        # Loop through each courses to check the dfs
+        for crs in range(numCourses):
+            if not dfs(crs):
+                return False
+        return True
+
+Complexity : O(V*M)
