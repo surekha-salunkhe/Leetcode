@@ -57,4 +57,5 @@ class Solution:
                 return False
         return True
 
-Complexity : O(V*M)
+Complexity : O(E + V) -> No.of edges + No. of Vertices
+----------------------------------------------------------------------------------------------------------------------------
