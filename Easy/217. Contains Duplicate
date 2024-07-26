@@ -33,4 +33,5 @@ class Solution:
             return True
         else:
             return False
-        
+
+Time complexity: O(n)
