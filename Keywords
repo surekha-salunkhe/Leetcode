@@ -1,2 +1,5 @@
 1. ANAGRAM
 An anagram is a string that contains the exact same characters as another string, but the order of the characters can be different.
+
+2. No-Zero integer
+No-Zero integer is a positive integer that does not contain any 0 in its decimal representation.
