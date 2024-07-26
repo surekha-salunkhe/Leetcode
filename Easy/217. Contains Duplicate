@@ -27,8 +27,8 @@ class Solution:
         #         return True
         #         break
         # return False
+
         y=set(nums)
-        print(y)
         if(len(y)!= len(nums)):
             return True
         else:
