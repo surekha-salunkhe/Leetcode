@@ -3,3 +3,14 @@ An anagram is a string that contains the exact same characters as another string
 
 2. No-Zero integer
 No-Zero integer is a positive integer that does not contain any 0 in its decimal representation.
+
+3. Binary (0,1)
+|-----------------------------------------|
+| Addition    Subtraction  Multiplication |
+| 0 + 0 = 0    0 - 0 = 0    0 * 0 = 0     |
+| 0 + 1 = 1    0 - 1 = 1**  0 * 1 = 0     |
+| 1 + 0 = 1    1 - 0 = 1    1 * 0 = 0     |
+| 1 + 1 = 1*   1 - 1 = 0    1 * 1 = 1     |
+|-----------------------------------------|
+1* - sum = 1, carry = 1 ans is 11
+1** - diff = 1, borrow from left value
