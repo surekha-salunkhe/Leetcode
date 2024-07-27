@@ -14,3 +14,7 @@ No-Zero integer is a positive integer that does not contain any 0 in its decimal
 |-----------------------------------------|
 1* - sum = 1, carry = 1 ans is 11
 1** - diff = 1, borrow from left value
+
+4. Palindrome
+A palindrome is a string that reads the same forward and backward, ignoring spaces, punctuation, and capitalization.
+
