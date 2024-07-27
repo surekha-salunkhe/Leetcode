@@ -1,0 +1,41 @@
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Example 1:
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+Example 2:
+Input: strs = [""]
+Output: [[""]]
+
+Example 3:
+Input: strs = ["a"]
+Output: [["a"]]
+
+Constraints:
+1 <= strs.length <= 104
+0 <= strs[i].length <= 100
+strs[i] consists of lowercase English letters.
+
+-----
+Solution:
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        # we need to declare a default dict with list 
+        res = defaultdict(list)
+
+        for s in strs:
+            count = [0] * 26 # lets create a count of letters from a - z 26 char
+
+            for c in s:
+                # to have count of a 1st till z, we need to have difference ascii values
+                count[ord(c) - ord("a")] += 1
+
+            # we cannot have list as keys so we have to use tuple as they are not mutable
+            res[tuple(count)].append(s)
+        
+        return res.values()
+
+Time Complexity: Counting char is O(k), where k is the length of the string. 
+Since we do this for all n strings, hence total cime complexity is O(n*k)
