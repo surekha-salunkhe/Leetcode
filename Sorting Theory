@@ -1,0 +1,35 @@
+Suppose we need to sort the array : arr = [1, 2, 4, 5, 2, 3]
+There are several ways to solve this problem, we will solve these in highest to lowest time complexity scenarios
+
+<ins>**1. Bubble sort O(n^2)**<ins>
+Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The process is repeated until the list is sorted.
+
+  Initial: [1, 2, 4, 5, 2, 3]
+  1st pass:                                          2nd pass:                                         3rd pass:
+  Compare 1 and 2: [1, 2, 4, 5, 2, 3]                Compare 1 and 2: [1, 2, 4, 2, 3, 5]               Compare 1 and 2: [1, 2, 2, 3, 4, 5]
+  Compare 2 and 4: [1, 2, 4, 5, 2, 3]                Compare 2 and 4: [1, 2, 4, 2, 3, 5]               Compare 2 and 2: [1, 2, 2, 3, 4, 5]
+  Compare 4 and 5: [1, 2, 4, 5, 2, 3]                Compare 4 and 2: [1, 2, 2, 4, 3, 5] (swap made)   Compare 2 and 3: [1, 2, 2, 3, 4, 5]
+  Compare 5 and 2: [1, 2, 4, 2, 5, 3] (swap made)    Compare 4 and 3: [1, 2, 2, 3, 4, 5] (swap made)
+  Compare 5 and 3: [1, 2, 4, 2, 3, 5] (swap made)
+  
+  Final sorted array: [1, 2, 2, 3, 4, 5]
+  We can also use a boolean variable to optimize the process by terminating the outer loop early.
+
+  def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swapped = True
+        # If no swaps were made, the array is already sorted
+        if not swapped:
+            break
+
+  # Example usage:
+  nums = [1, 2, 4, 5, 2, 3]
+  bubble_sort(nums)
+  print("Bubble Sort:", nums)  # Output: [1, 2, 2, 3, 4, 5]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Insertion sort:
