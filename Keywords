@@ -18,3 +18,22 @@ No-Zero integer is a positive integer that does not contain any 0 in its decimal
 4. Palindrome
 A palindrome is a string that reads the same forward and backward, ignoring spaces, punctuation, and capitalization.
 
+5. Fibonacci F(n) = F(n-1) + F(n-2)
+
+6. Tribonacci F(n) = F(n-1) + F(n-2) + F(n-3)
+
+7. Bitwise OR (|) 0 + 0 = 0, xor (^) 0 ^ 0 and 1 ^ 1 = 0, 1<<(n-1) == 1*(2^(n-1)) 
+
+8. good pairs A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+
+9. append(whole array) and extend(individual elements)
+lst = [1, 2, 3]
+lst.append([4, 5])
+print(lst)  # Output: [1, 2, 3, [4, 5]]
+
+lst = [1, 2, 3]
+lst.extend([4, 5])
+print(lst)  # Output: [1, 2, 3, 4, 5]
+Note: we cannot extend a single number to array lst.extend(4) will give an typeerror
+
+10.
