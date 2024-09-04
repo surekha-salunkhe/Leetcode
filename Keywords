@@ -23,6 +23,11 @@ A palindrome is a string that reads the same forward and backward, ignoring spac
 6. Tribonacci F(n) = F(n-1) + F(n-2) + F(n-3)
 
 7. Bitwise OR (|) 0 + 0 = 0, xor (^) 0 ^ 0 and 1 ^ 1 = 0, 1<<(n-1) == 1*(2^(n-1)) 
+XOR Operation:
+XOR (exclusive OR) is a bitwise operation that has a few interesting properties:
+a ^ a = 0 (XOR of any number with itself is 0)
+a ^ 0 = a (XOR of any number with 0 is the number itself)
+XOR is commutative and associative, meaning the order in which you XOR numbers doesn't matter.
 
 8. good pairs A pair (i, j) is called good if nums[i] == nums[j] and i < j.
 
