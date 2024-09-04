@@ -1,0 +1,45 @@
+https://leetcode.com/problems/excel-sheet-column-title/description
+Topics: Math, String
+
+Given an integer columnNumber, return its corresponding column title as it appears in an Excel sheet.
+For example:
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+ 
+Example 1:
+Input: columnNumber = 1
+Output: "A"
+
+Example 2:
+Input: columnNumber = 28
+Output: "AB"
+
+Example 3:
+Input: columnNumber = 701
+Output: "ZY"
+
+Constraints:
+1 <= columnNumber <= 231 - 1
+--------------------------------------------------------------------------------------------------------------------------
+My solution:
+class Solution:
+    def convertToTitle(self, columnNumber: int) -> str:
+        title = ''
+        while columnNumber > 0:
+            columnNumber -= 1
+            title = chr(columnNumber % 26 + ord('A')) + title
+            columnNumber //= 26
+        return title
+--------------------------------------------------------------------------------------------------------------------------
+Complexity: O(log(N)) 
+Time : the value of columnNumber is divided by 26 (columnNumber //= 26), which reduces the problem size logarithmically.
+Number of Iterations: The number of iterations is approximately O(log_26(columnNumber)), 
+which simplifies to O(log(columnNumber)) since the base of the logarithm is constant.
+
+Space: length of the resulting string is proportional to the number of iterations of the loop, which is O(log(columnNumber)).
