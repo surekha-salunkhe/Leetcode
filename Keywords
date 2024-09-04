@@ -36,5 +36,6 @@ lst.extend([4, 5])
 print(lst)  # Output: [1, 2, 3, 4, 5]
 Note: we cannot extend a single number to array lst.extend(4) will give an typeerror
 
-10. zip(*matrix) will transpose the matrix
+10. a = list(zip(*matrix), transpose_mat = [list(row) for row in a]  -> will transpose the matrix
 
+11. word.ljust(max_length, ' ') - will fill missing space with character if length is not match
