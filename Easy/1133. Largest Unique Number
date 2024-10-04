@@ -1,0 +1,34 @@
+https://leetcode.com/problems/largest-unique-number/description/
+
+Given an integer array nums, return the largest integer that only occurs once. If no integer occurs once, return -1.
+Example 1:
+Input: nums = [5,7,3,9,4,9,8,3,1]
+Output: 8
+
+Example 2:
+Input: nums = [9,9,8,8]
+Output: -1
+Explanation: There is no number that occurs only once.
+ 
+Constraints:
+1 <= nums.length <= 2000
+0 <= nums[i] <= 1000
+------------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def largestUniqueNumber(self, nums: List[int]) -> int:
+        
+        count = {}
+
+        # for i in nums:
+        #     if i in count:
+        #         count[i] += 1
+        #     else:
+        #         count[i] = 1
+        for i in nums:
+            count[i] = count.get(i, 0) + 1
+
+        max_value = -1
+        for k, v in count.items():
+            if v == 1:
+                max_value = max(max_value, k)
+        return max_value
