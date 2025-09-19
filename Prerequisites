@@ -1,0 +1,93 @@
+Step 1: Core Prerequisites
+
+🔹 Data Structures
+
+Arrays & Strings
+Linked Lists (singly, doubly)
+Stacks & Queues (and Deque)
+HashMap / HashSet (Dictionary in Python, Map/Set in Java)
+Trees (binary, BST, n-ary) + traversals
+Graphs (adjacency list/matrix, directed/undirected)
+Heaps / PriorityQueue
+Trie
+Disjoint Set (Union-Find)
+
+🔹 Algorithms
+
+Sorting (quick, merge, heap, counting sort basics)
+Searching (binary search + variations)
+Recursion & Backtracking
+Greedy algorithms
+Dynamic Programming (memoization, tabulation)
+Graph algorithms: BFS, DFS
+Dijkstra
+Bellman-Ford
+Floyd-Warshall
+Topological Sort
+Divide and Conquer
+Bit Manipulation
+
+🔹 Math / Misc
+
+Modular arithmetic
+GCD/LCM (Euclidean algorithm)
+Probability basics (optional but useful)
+Prefix sum, difference array
+Two-pointer technique
+
+------------------------------------------------------------------------------------------------
+Step 2: Problem-Solving Patterns
+
+Almost every LeetCode problem falls into one of these 20–25 patterns. 
+Master these patterns instead of solving random problems:
+
+Two Pointers (slow/fast, left/right)
+Sliding Window
+Binary Search (on array, on answer space)
+Prefix Sum & Kadane’s Algorithm
+Hashing for lookup / frequency
+Monotonic Stack / Queue
+Heap / Priority Queue
+Recursion / Backtracking (subsets, permutations, N-Queens, Sudoku)
+Dynamic Programming
+1D (Fibonacci, climbing stairs)
+2D (knapsack, matrix path)
+DP with state compression
+DP on trees & graphs
+Greedy (intervals, scheduling, coin change variants)
+Graph Traversal (DFS, BFS, union-find, topological sort)
+Shortest Path (Dijkstra, BFS for unweighted)
+Binary Trees (traversals, diameter, LCA)
+Tries (prefix tree)
+Bitmasking
+Segment Tree / Fenwick Tree (later stage)
+Math-heavy (primes, modular arithmetic, combinatorics)
+Design problems (LRU cache, rate limiter, etc.)
+
+-------------------------------------------------------------------------------------------------------------------
+Step 3: Learning Plan
+
+Here’s a progressive plan we can follow:
+
+Phase 1 (Warmup: Arrays, Strings, Hashing, Two Pointers)
+Problems: Two Sum, Valid Anagram, Group Anagrams, Longest Substring without Repeating Characters
+Skills: HashMap, sorting, two pointers, sliding window
+
+Phase 2 (LinkedList, Stack, Queue, Recursion)
+Problems: Reverse Linked List, Merge Two Lists, Valid Parentheses, Min Stack
+Skills: Recursion, stack simulation
+
+Phase 3 (Trees, Graphs, BFS/DFS)
+Problems: Binary Tree Traversals, Level Order, Maximum Depth, Clone Graph
+Skills: recursion, iterative traversal, adjacency list
+
+Phase 4 (Binary Search, Greedy, Sorting, Heap)
+Problems: Search Rotated Sorted Array, Meeting Rooms, K Closest Points
+Skills: binary search variations, heap
+
+Phase 5 (Dynamic Programming)
+Problems: Climbing Stairs, House Robber, Coin Change, Longest Increasing Subsequence
+Skills: memoization, bottom-up DP
+
+Phase 6 (Advanced: Tries, Graph shortest path, Design)
+Problems: Word Search II, LRU Cache, Dijkstra problems
