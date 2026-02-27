@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFS Tree Traversal Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        #treeCanvas {
+            display: block;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .queue-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 100px;
+            overflow-x: auto;
+            padding: 10px;
+        }
+
+        .queue-label {
+            font-weight: 600;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .queue-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .queue-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .queue-level {
+            font-size: 0.8em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .current-node {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .current-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .current-value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .result-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .result-level {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .level-label {
+            font-weight: 600;
+            color: #666;
+            min-width: 100px;
+        }
+
+        .result-values {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .result-item {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-prev {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 12px 32px;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .step-counter {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌳 BFS Tree Traversal Visualization</h1>
+
+        <!-- Tree Visualization -->
+        <div class="section">
+            <canvas id="treeCanvas" width="900" height="450"></canvas>
+        </div>
+
+        <!-- Queue Visualization -->
+        <div class="section">
+            <div class="section-title">Queue State (FIFO - First In, First Out)</div>
+            <div class="queue-container" id="queueContainer">
+                <div class="queue-label">Front →</div>
+                <div class="empty-state">Queue is empty</div>
+                <div class="queue-label">← Back</div>
+            </div>
+        </div>
+
+        <!-- Current Processing -->
+        <div class="section">
+            <div class="section-title">Currently Processing</div>
+            <div id="currentProcessing">
+                <div class="empty-state">No node being processed</div>
+            </div>
+        </div>
+
+        <!-- Result by Level -->
+        <div class="section">
+            <div class="section-title">Result (Level Order Traversal)</div>
+            <div class="result-levels" id="resultLevels">
+                <div class="empty-state">No nodes processed yet</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="section">
+            <div class="controls">
+                <button class="btn-reset" onclick="reset()">🔄 Reset</button>
+                <button class="btn-prev" onclick="previousStep()" id="prevBtn">⏮ Previous</button>
+                <button class="btn-play" onclick="togglePlay()" id="playBtn">▶ Play</button>
+                <button class="btn-next" onclick="nextStep()" id="nextBtn">Next ⏭</button>
+            </div>
+            <div class="step-counter" id="stepCounter">Step 1 of 1</div>
+        </div>
+
+        <!-- Legend -->
+        <div class="section">
+            <div class="section-title">Legend</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #f5576c;"></div>
+                    <span>Currently Processing</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #667eea;"></div>
+                    <span>In Queue</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #00f2fe;"></div>
+                    <span>Visited</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #e2e8f0;"></div>
+                    <span>Not Visited</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tree structure matching the Python code
+        const treeData = {
+            value: 5,
+            left: {
+                value: 12,
+                left: {
+                    value: 7,
+                    left: { value: 17, left: null, right: null },
+                    right: { value: 23, left: null, right: null }
+                },
+                right: {
+                    value: 14,
+                    left: { value: 27, left: null, right: null },
+                    right: { value: 3, left: null, right: null }
+                }
+            },
+            right: {
+                value: 13,
+                left: null,
+                right: {
+                    value: 2,
+                    left: { value: 8, left: null, right: null },
+                    right: { value: 11, left: null, right: null }
+                }
+            }
+        };
+
+        let steps = [];
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+
+        // Generate BFS steps
+        function generateSteps() {
+            const stepsArray = [];
+            const queue = [{ node: treeData, level: 0 }];
+            const visited = new Set();
+
+            // Initial state
+            stepsArray.push({
+                queue: [{ value: treeData.value, level: 0 }],
+                current: null,
+                visited: [],
+                result: [],
+                level: 0,
+                description: 'Initialize queue with root node (5)'
+            });
+
+            let result = [];
+
+            while (queue.length > 0) {
+                const queueSnapshot = queue.map(q => ({ value: q.node.value, level: q.level }));
+                const { node, level } = queue.shift();
+
+                visited.add(node.value);
+
+                if (!result[level]) {
+                    result[level] = [];
+                }
+                result[level].push(node.value);
+
+                // Step: Processing current node
+                stepsArray.push({
+                    queue: queueSnapshot.slice(1),
+                    current: { value: node.value, level },
+                    visited: Array.from(visited),
+                    result: JSON.parse(JSON.stringify(result)),
+                    level,
+                    description: `Dequeue and process node ${node.value} at Level ${level}`
+                });
+
+                // Add children to queue
+                const childrenAdded = [];
+                if (node.left) {
+                    queue.push({ node: node.left, level: level + 1 });
+                    childrenAdded.push(node.left.value);
+                }
+                if (node.right) {
+                    queue.push({ node: node.right, level: level + 1 });
+                    childrenAdded.push(node.right.value);
+                }
+
+                if (childrenAdded.length > 0) {
+                    stepsArray.push({
+                        queue: queue.map(q => ({ value: q.node.value, level: q.level })),
+                        current: { value: node.value, level },
+                        visited: Array.from(visited),
+                        result: JSON.parse(JSON.stringify(result)),
+                        level,
+                        description: `Enqueue children [${childrenAdded.join(', ')}] to back of queue`
+                    });
+                }
+            }
+
+            // Final state
+            stepsArray.push({
+                queue: [],
+                current: null,
+                visited: Array.from(visited),
+                result,
+                level: -1,
+                description: '✅ BFS traversal complete! All nodes visited in level order.'
+            });
+
+            return stepsArray;
+        }
+
+        // Draw tree on canvas
+        function drawTree() {
+            const canvas = document.getElementById('treeCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const stepData = steps[currentStep];
+
+            function drawNode(node, x, y, level, horizontalSpacing) {
+                if (!node) return;
+
+                const isVisited = stepData.visited.includes(node.value);
+                const isCurrent = stepData.current?.value === node.value;
+                const inQueue = stepData.queue.some(q => q.value === node.value);
+
+                // Draw lines to children first
+                if (node.left) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x - horizontalSpacing, y + 80);
+                    ctx.strokeStyle = '#cbd5e1';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                if (node.right) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + horizontalSpacing, y + 80);
+                    ctx.strokeStyle = '#cbd5e1';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+
+                // Draw node circle
+                ctx.beginPath();
+                ctx.arc(x, y, 28, 0, 2 * Math.PI);
+
+                if (isCurrent) {
+                    ctx.fillStyle = '#f5576c';
+                    ctx.strokeStyle = '#dc2626';
+                } else if (isVisited) {
+                    ctx.fillStyle = '#00f2fe';
+                    ctx.strokeStyle = '#00d4ea';
+                } else if (inQueue) {
+                    ctx.fillStyle = '#667eea';
+                    ctx.strokeStyle = '#5568d3';
+                } else {
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.strokeStyle = '#cbd5e1';
+                }
+
+                ctx.fill();
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Draw value
+                ctx.fillStyle = (isCurrent || isVisited || inQueue) ? 'white' : '#1e293b';
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.value, x, y);
+
+                // Draw children
+                const nextSpacing = horizontalSpacing / 2;
+                if (node.left) {
+                    drawNode(node.left, x - horizontalSpacing, y + 80, level + 1, nextSpacing);
+                }
+                if (node.right) {
+                    drawNode(node.right, x + horizontalSpacing, y + 80, level + 1, nextSpacing);
+                }
+            }
+
+            drawNode(treeData, 450, 40, 0, 200);
+        }
+
+        // Update queue display
+        function updateQueue() {
+            const container = document.getElementById('queueContainer');
+            const stepData = steps[currentStep];
+
+            if (stepData.queue.length === 0) {
+                container.innerHTML = `
+                    <div class="queue-label">Front →</div>
+                    <div class="empty-state">Queue is empty</div>
+                    <div class="queue-label">← Back</div>
+                `;
+            } else {
+                const queueItems = stepData.queue.map(item => `
+                    <div class="queue-item">
+                        <div class="queue-value">${item.value}</div>
+                        <div class="queue-level">Level ${item.level}</div>
+                    </div>
+                `).join('');
+
+                container.innerHTML = `
+                    <div class="queue-label">Front →</div>
+                    ${queueItems}
+                    <div class="queue-label">← Back</div>
+                `;
+            }
+        }
+
+        // Update current processing display
+        function updateCurrentProcessing() {
+            const container = document.getElementById('currentProcessing');
+            const stepData = steps[currentStep];
+
+            if (stepData.current) {
+                container.innerHTML = `
+                    <div class="current-node">
+                        <div class="current-box">
+                            <div class="current-value">${stepData.current.value}</div>
+                            <div class="queue-level">Level ${stepData.current.level}</div>
+                        </div>
+                        <div class="description">${stepData.description}</div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<div class="description">${stepData.description}</div>`;
+            }
+        }
+
+        // Update result display
+        function updateResult() {
+            const container = document.getElementById('resultLevels');
+            const stepData = steps[currentStep];
+
+            if (stepData.result.length === 0) {
+                container.innerHTML = '<div class="empty-state">No nodes processed yet</div>';
+            } else {
+                const levelHTML = stepData.result.map((level, idx) => `
+                    <div class="result-level">
+                        <div class="level-label">Level ${idx}:</div>
+                        <div class="result-values">
+                            ${level.map(value => `<div class="result-item">${value}</div>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                container.innerHTML = levelHTML;
+            }
+        }
+
+        // Update step counter and button states
+        function updateControls() {
+            document.getElementById('stepCounter').textContent =
+                `Step ${currentStep + 1} of ${steps.length}`;
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').disabled = currentStep === steps.length - 1;
+        }
+
+        // Render current step
+        function render() {
+            drawTree();
+            updateQueue();
+            updateCurrentProcessing();
+            updateResult();
+            updateControls();
+        }
+
+        // Navigation functions
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                render();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                render();
+            }
+        }
+
+        function reset() {
+            currentStep = 0;
+            isPlaying = false;
+            clearInterval(playInterval);
+            document.getElementById('playBtn').textContent = '▶ Play';
+            render();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playBtn');
+
+            if (isPlaying) {
+                btn.textContent = '⏸ Pause';
+                playInterval = setInterval(() => {
+                    if (currentStep < steps.length - 1) {
+                        nextStep();
+                    } else {
+                        isPlaying = false;
+                        btn.textContent = '▶ Play';
+                        clearInterval(playInterval);
+                    }
+                }, 1500);
+            } else {
+                btn.textContent = '▶ Play';
+                clearInterval(playInterval);
+            }
+        }
+
+        // Initialize
+        steps = generateSteps();
+        render();
+    </script>
+</body>
+</html>
