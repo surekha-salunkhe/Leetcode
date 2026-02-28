@@ -1,4 +1,4 @@
-package arrays;
+package Easy;
 
 public class MaxDepthBinaryTree {
     /*
